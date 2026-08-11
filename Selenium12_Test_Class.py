@@ -7,8 +7,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 #  from selenium.webdriver.common.by import By
 
 
-class Open_by_Chrome:
-    def __init__(self, detach=True):  #  создание вебдрайвера Chrome
+class OpenByChrome:
+    def __init__(self):  #  создание вебдрайвера Chrome
         options = webdriver.ChromeOptions()  #  настройки Chrome
         options.add_experimental_option("detach", True)  #  в настройки добавлен параметр detach
         print(f'Chrome experimental options = {options._experimental_options}\n')  #  сообщение об опциях Chrome
@@ -25,7 +25,7 @@ class Open_by_Chrome:
         print('The link is open in a Chrome window')
 
 
-test_start = Open_by_Chrome()  #  экземпляр класса
+test_start = OpenByChrome()  #  экземпляр класса
 test_start.opening_the_site()  #  открытие сайта в окне браузера
 
 time.sleep(6)
