@@ -69,8 +69,7 @@ class OpenAndCloseByChrome:
         try:
             #  Закроем активное окно
             pyautogui.hotkey('alt', 'f4')
-            print('[Alt] + [F4] have been pressed.')
-            print("Current window was closed.")
+            print('[Alt] + [F4] have been pressed to close current window.')
 
         except Exception as exception:  #  при наличии ошибки запоминаем ошибку
             print(f"Ошибка при закрытии: {exception}")
