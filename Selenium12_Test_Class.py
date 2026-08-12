@@ -25,7 +25,7 @@ class OpenAndCloseByChrome:
             options=options
         )
 
-    #  открытие сайта в окне браузера
+    #  открытие сайта в окне браузера не на полный экран
     def opening_the_site(self):
         #  Открываем вебдрайвером ссылку
         self.driver.get('https://saucedemo.com/')
@@ -43,39 +43,25 @@ class OpenAndCloseByChrome:
         self.driver.set_window_position(0, 0)
 
         print('The link is open in a Chrome window.')
+        if not self.detach:
+            print('The browser window will close automatically when the session ends.')
 
-    #  закрытие браузера с учетом параметра detach
+    #  закрытие браузера
     def closing_the_browser(self):
         #  Сначала -- проверка одновременного наличия и непустоты driver в классе
         if hasattr(self, 'driver') and self.driver is not None:
             try:
-                if not self.detach:  #  При detach=False или при отсутствии параметра detach
-                    #  Закроем все вкладки браузера, открытые драйвером в рамках текущей сессии
-                    self.driver.quit()
-                    print("Script execution terminated. Browser (no Detach mode) was closed.")
-
-                else:  #  При detach=True
-                    print('''Detach mode:
-    Script execution terminated.
-    The browser window is not closed.''')
-
-            except Exception as exception:  #  при наличии ошибки запоминаем ошибку
+                print('The browser will close in 5 seconds.')
+                time.sleep(5)
+                self.driver.quit()
+                print('Session terminated. Browser was closed.')
+            except Exception as exception:  #  При наличии ошибки запоминаем ошибку
                 print(f"Ошибка при закрытии: {exception}")
+                quit()  #  Из-за отловленной ошибки завершаем работу
             finally:
                 self.driver = None  #  Зануляем ссылку, для очистки памяти
-
-    #  безусловное закрытие активного окна
-    def unconditional_quitting_the_window(self):
-        try:
-            #  Закроем активное окно
-            pyautogui.hotkey('alt', 'f4')
-            print('[Alt] + [F4] have been pressed to close current window.')
-
-        except Exception as exception:  #  при наличии ошибки запоминаем ошибку
-            print(f"Ошибка при закрытии: {exception}")
-
-        finally:
-            self.driver = None  #  Зануляем ссылку, для очистки памяти
+        else:
+            print('Browser window not found')
 
 
 #  1)
@@ -86,13 +72,7 @@ test_start1 = OpenAndCloseByChrome()
 test_start1.opening_the_site()  #  открытие сайта в окне браузера
 time.sleep(3)
 
-#  завершим работу скрипта (но из-за detach=True окно не закроется)
-test_start1.closing_the_browser()
-time.sleep(3)
-
-#  закрытие текщего окна
-#  (не рекомендуется, можно закрыть не то окно при случайном изменении фокуса)
-test_start1.unconditional_quitting_the_window()
+test_start1.closing_the_browser()  #  завершим работу скрипта
 time.sleep(3)
 
 #  2)
@@ -101,10 +81,10 @@ time.sleep(3)
 test_start2 = OpenAndCloseByChrome(detach=False)
 
 test_start2.opening_the_site()  #  открытие сайта в окне браузера
+#  из-за detach не равно True окно браузера закроется по окончании работы скрипта
 time.sleep(3)
 
-#  завершим работу скрипта (и из-за detach не равно True окно закроется)
-test_start2.closing_the_browser()
+
 
 
 
