@@ -73,7 +73,7 @@ warning about the password change\n''', '_' * 26, sep = '')
             print(f'The login button did not become clickable in {authorization_waiting_time} seconds')
             mistakes += 1  # Увеличим значение на 1
         #  Вводим user-name и password (верные для этого сайта) в поля ввода
-        mistakes = 0  #  Счетчик ошибок
+
         try:
             self.driver.find_element(By.ID, "user-name").send_keys("standard_user")
         except NoSuchElementException:  #  если поле не найдено
